@@ -5,7 +5,6 @@ def cache_decorator(func):
         key = hash((args, frozenset(kwargs.items())))
 
         if key in cache_dict:
-            print('Наступний результат повернуто з кешу')
             return cache_dict[key]
         else:
             result = func(*args, **kwargs)
