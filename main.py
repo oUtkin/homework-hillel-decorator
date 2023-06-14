@@ -1,11 +1,11 @@
-def cache(func):
+def cache_decorator(func):
     cache_dict = {}
 
     def wrapper(*args, **kwargs):
         key = hash((args, frozenset(kwargs.items())))
 
         if key in cache_dict:
-            print('Returning result from cache')
+            print('Наступний результат повернуто з кешу')
             return cache_dict[key]
         else:
             result = func(*args, **kwargs)
@@ -15,11 +15,20 @@ def cache(func):
     return wrapper
 
 
-@cache
-def triangle_area(a, b):
-    print('Calculating triangle area')
-    return 0.5 * a * b
+@cache_decorator
+def triangle_area(a: float, b: float) -> float:
+    print(f'Викликана функція triangle_area з аргументами {a} та {b}')
+    return a * b
 
 
-print(triangle_area(5, 10))
-print(triangle_area(5, 10))
+@cache_decorator
+def circle_area(r: float) -> float:
+    print(f'Викликана функція circle_area з аргументом {r}')
+    return 3.14 * (r * r)
+
+
+print('Результат виконання triangle_area(5, 10):', triangle_area(5, 10))
+print('Результат виконання triangle_area(5, 10):', triangle_area(5, 10))
+print('Результат виконання circle_area(20):', circle_area(20))
+print('Результат виконання triangle_area(10, 10):', triangle_area(10, 10))
+print('Результат виконання circle_area(20):', circle_area(20))
